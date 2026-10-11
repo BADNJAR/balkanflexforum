@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="hr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Balkan Flex Roleplay - Forum</title>
+    <style>
+        :root {
+            --bg: #0b0c10;
+            --panel: #14161d;
+            --panel-2: #1b1e27;
+            --line: #272b37;
+            --text: #d6d9e0;
+            --muted: #8a90a0;
+            --red: #ff2a3d;
+            --red-2: #ff6a3d;
+            --gold: #f5b53d;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+        html { scroll-behavior: smooth; }
+
+        body {
+            background:
+                radial-gradient(900px 500px at 15% -10%, rgba(255,42,61,.18), transparent 60%),
+                radial-gradient(800px 500px at 100% 0%, rgba(255,106,61,.10), transparent 60%),
+                var(--bg);
+            background-attachment: fixed;
+            color: var(--text);
+            min-height: 100vh;
+        }
+
+        a { text-decoration: none; color: inherit; }
+
+        /* ---------- Header ---------- */
+        header {
+            position: sticky; top: 0; z-index: 50;
+            background: rgba(11,12,16,.78);
+            backdrop-filter: blur(14px);
+            -webkit-backdrop-filter: blur(14px);
+            border-bottom: 1px solid var(--line);
+        }
+        .header-in {
+            max-width: 1180px; margin: 0 auto; padding: 14px 24px;
+            display: flex; justify-content: space-between; align-items: center; gap: 20px;
+        }
+        .logo { display: flex; align-items: center; gap: 12px; font-weight: 800; letter-spacing: .06em; font-size: 20px; text-transform: uppercase; }
+        .logo-mark {
+            width: 38px; height: 38px; border-radius: 10px;
+            background: linear-gradient(135deg, var(--red), var(--red-2));
+            display: grid; place-items: center; color: #fff; font-size: 16px; font-weight: 900;
+            box-shadow: 0 6px 20px rgba(255,42,61,.45);
+        }
+        .logo b { color: #fff; }
+        .logo em { font-style: normal; background: linear-gradient(90deg, var(--red), var(--red-2)); -webkit-background-clip: text; background-clip: text; color: transparent; }
+
+        nav { display: flex; gap: 6px; flex-wrap: wrap; }
+        nav a {
+            color: var(--muted); font-size: 14px; font-weight: 600;
+            padding: 8px 14px; border-radius: 8px; transition: .2s;
+        }
+        nav a:hover { color: #fff; background: var(--panel-2); }
+        nav a.active { color: #fff; background: linear-gradient(135deg, rgba(255,42,61,.25), rgba(255,106,61,.15)); box-shadow: inset 0 0 0 1px rgba(255,42,61,.35); }
+        nav a.cta { background: linear-gradient(135deg, var(--red), var(--red-2)); color: #fff; box-shadow: 0 6px 18px rgba(255,42,61,.35); }
+        nav a.cta:hover { filter: brightness(1.1); }
+
+        /* ---------- Layout ---------- */
+        .container { max-width: 1180px; margin: 0 auto; padding: 0 24px 60px; }
+
+        /* ---------- Hero ---------- */
+        .hero {
+            margin-top: 34px; margin-bottom: 34px;
+            padding: 46px 44px;
+            border-radius: 20px;
+            background:
+                linear-gradient(120deg, rgba(255,42,61,.16), rgba(255,106,61,.05) 55%, transparent),
+                var(--panel);
+            border: 1px solid var(--line);
+            position: relative; overflow: hidden;
+        }
+        .hero::after {
+            content: ''; position: absolute; right: -80px; top: -80px; width: 320px; height: 320px; border-radius: 50%;
+            background: radial-gradient(circle, rgba(255,42,61,.35), transparent 65%); pointer-events: none;
+        }
+        .hero .tag {
+            display: inline-block; font-size: 12px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase;
+            color: var(--red-2); background: rgba(255,106,61,.12); border: 1px solid rgba(255,106,61,.3);
+            padding: 6px 12px; border-radius: 999px; margin-bottom: 16px;
+        }
+        .hero h1 { font-size: 38px; line-height: 1.15; color: #fff; margin-bottom: 14px; max-width: 680px; }
+        .hero h1 span { background: linear-gradient(90deg, var(--red), var(--red-2)); -webkit-background-clip: text; background-clip: text; color: transparent; }
+        .hero p { max-width: 640px; font-size: 15px; line-height: 1.7; color: var(--muted); margin-bottom: 24px; position: relative; z-index: 1; }
+        .hero-btns { display: flex; gap: 12px; flex-wrap: wrap; position: relative; z-index: 1; }
+
+        .btn {
+            display: inline-flex; align-items: center; gap: 8px;
+            padding: 12px 22px; border-radius: 10px; font-size: 14px; font-weight: 700; transition: .2s; cursor: pointer; border: 1px solid transparent;
+        }
+        .btn-primary { background: linear-gradient(135deg, var(--red), var(--red-2)); color: #fff; box-shadow: 0 8px 22px rgba(255,42,61,.35); }
+        .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 12px 28px rgba(255,42,61,.5); }
+        .btn-ghost { background: rgba(255,255,255,.04); color: #fff; border-color: var(--line); }
+        .btn-ghost:hover { background: rgba(255,255,255,.09); transform: translateY(-2px); }
+
+        /* ---------- Section titles ---------- */
+        .section-title {
+            display: flex; align-items: center; gap: 12px;
+            margin: 40px 0 16px; color: #fff; font-size: 13px; font-weight: 800; letter-spacing: .16em; text-transform: uppercase;
+        }
+        .section-title::before { content: ''; width: 4px; height: 20px; border-radius: 2px; background: linear-gradient(var(--red), var(--red-2)); }
+        .section-title::after { content: ''; flex: 1; height: 1px; background: linear-gradient(90deg, var(--line), transparent); }
+
+        /* ---------- Notice ---------- */
+        .notice {
+            display: flex; gap: 14px; align-items: flex-start;
+            background: linear-gradient(120deg, rgba(245,181,61,.10), rgba(245,181,61,.02));
+            border: 1px solid rgba(245,181,61,.28); border-radius: 14px;
+            padding: 16px 20px; margin-bottom: 16px;
+        }
+        .notice .ic { font-size: 22px; line-height: 1.2; }
+        .notice p { font-size: 13.5px; line-height: 1.65; color: #cfc6ad; }
+        .notice b { color: var(--gold); }
+
+        /* ---------- Category / Rows ---------- */
+        .category {
+            background: var(--panel); border: 1px solid var(--line); border-radius: 16px; overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,.25);
+        }
+        .forum-row {
+            display: flex; align-items: center; gap: 16px;
+            padding: 18px 22px; border-bottom: 1px solid var(--line); transition: .2s; position: relative;
+        }
+        .forum-row:last-child { border-bottom: none; }
+        .forum-row::before {
+            content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 3px;
+            background: linear-gradient(var(--red), var(--red-2)); opacity: 0; transition: .2s;
+        }
+        .forum-row:hover { background: var(--panel-2); }
+        .forum-row:hover::before { opacity: 1; }
+
+        .forum-icon {
+            width: 48px; height: 48px; flex: none; border-radius: 14px;
+            background: linear-gradient(135deg, #252937, #1c1f2a);
+            border: 1px solid var(--line);
+            display: grid; place-items: center; font-size: 22px; transition: .2s;
+        }
+        .forum-row:hover .forum-icon { transform: scale(1.08) rotate(-4deg); border-color: rgba(255,42,61,.5); }
+
+        .forum-info { flex: 1; min-width: 0; }
+        .forum-title { color: #fff; font-size: 16px; font-weight: 700; display: block; transition: .2s; }
+        .forum-row:hover .forum-title { color: var(--red-2); }
+        .forum-desc { font-size: 13px; color: var(--muted); margin-top: 4px; line-height: 1.5; }
+
+        .forum-stats { flex: none; min-width: 130px; text-align: right; font-size: 12.5px; color: var(--muted); line-height: 1.6; }
+        .forum-stats b { display: block; color: #fff; font-size: 15px; }
+
+        .btn-zalba {
+            display: inline-block; background: linear-gradient(135deg, var(--red), var(--red-2)); color: #fff;
+            padding: 9px 16px; border-radius: 9px; font-size: 12.5px; font-weight: 700; transition: .2s;
+            box-shadow: 0 6px 16px rgba(255,42,61,.3);
+        }
+        .btn-zalba:hover { transform: translateY(-2px); filter: brightness(1.1); }
+
+        /* ---------- Staff ---------- */
+        .staff-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+        .staff-card {
+            background: var(--panel); border: 1px solid var(--line); border-radius: 18px;
+            padding: 30px 22px 26px; text-align: center; position: relative; overflow: hidden; transition: .25s;
+            box-shadow: 0 10px 30px rgba(0,0,0,.25);
+        }
+        .staff-card::before {
+            content: ''; position: absolute; left: 0; right: 0; top: 0; height: 4px; background: var(--accent);
+        }
+        .staff-card::after {
+            content: ''; position: absolute; left: 50%; top: -60px; width: 220px; height: 220px; transform: translateX(-50%);
+            background: radial-gradient(circle, var(--accent-soft), transparent 65%); pointer-events: none;
+        }
+        .staff-card:hover { transform: translateY(-6px); border-color: var(--accent); box-shadow: 0 18px 40px rgba(0,0,0,.4); }
+
+        .staff-card.owner  { --accent: #ff2a3d; --accent-soft: rgba(255,42,61,.28); }
+        .staff-card.dev    { --accent: #8b5cf6; --accent-soft: rgba(139,92,246,.28); }
+        .staff-card.leader { --accent: #f5b53d; --accent-soft: rgba(245,181,61,.26); }
+
+        .avatar {
+            width: 84px; height: 84px; margin: 0 auto 16px; border-radius: 50%;
+            display: grid; place-items: center; font-size: 30px; font-weight: 800; color: #fff;
+            background: linear-gradient(135deg, var(--accent), #14161d 140%);
+            box-shadow: 0 0 0 4px var(--panel), 0 0 0 6px var(--accent), 0 10px 26px var(--accent-soft);
+            position: relative; z-index: 1;
+        }
+        .staff-name { color: #fff; font-size: 19px; font-weight: 800; position: relative; z-index: 1; }
+        .staff-role {
+            display: inline-block; margin-top: 10px; font-size: 11.5px; font-weight: 800; letter-spacing: .1em; text-transform: uppercase;
+            padding: 6px 14px; border-radius: 999px; color: #fff; background: var(--accent); position: relative; z-index: 1;
+        }
+        .staff-desc { margin-top: 14px; font-size: 13px; line-height: 1.6; color: var(--muted); position: relative; z-index: 1; }
+
+        /* ---------- Footer ---------- */
+        footer {
+            border-top: 1px solid var(--line); margin-top: 30px; padding: 26px 24px; text-align: center;
+            font-size: 13px; color: var(--muted); background: rgba(11,12,16,.6);
+        }
+        footer b { color: #fff; }
+        footer span { color: var(--red); }
+
+        /* ---------- Responsive ---------- */
+        @media (max-width: 900px) {
+            .staff-grid { grid-template-columns: 1fr; }
+            .hero { padding: 32px 24px; }
+            .hero h1 { font-size: 28px; }
+        }
+        @media (max-width: 640px) {
+            .header-in { flex-direction: column; align-items: flex-start; }
+            .forum-row { flex-wrap: wrap; }
+            .forum-stats { text-align: left; width: 100%; padding-left: 64px; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="header-in">
+            <a href="#" class="logo">
+                <div class="logo-mark">BF</div>
+                <div><b>BALKAN FLEX</b> <em>ROLEPLAY</em></div>
+            </a>
+            <nav>
+                <a href="#" class="active">Forum</a>
+                <a href="#">Pravila</a>
+                <a href="zalbe.html">Žalbe</a>
+                <a href="#staff">Staff</a>
+                <a href="#">Korisnički Panel</a>
+                <a href="https://discord.gg/mtyzrtEf2V" class="cta" target="_blank" rel="noopener">Discord</a>
+            </nav>
+        </div>
+    </header>
+
+    <div class="container">
+
+        <!-- Hero -->
+        <section class="hero">
+            <span class="tag">Službeni forum</span>
+            <h1>Dobrodošli na <span>Balkan Flex Roleplay</span></h1>
+            <p>Ovdje možete pratiti novosti servera, pročitati pravila, podnijeti žalbu ili zahtjev za unban.
+            Prije igre obavezno pročitajte pravila servera. Za sva pitanja obratite se našem staff timu ili nas posjetite na Discordu.</p>
+            <div class="hero-btns">
+                <a href="#" class="btn btn-primary">📜 Pročitaj pravila</a>
+                <a href="https://discord.gg/mtyzrtEf2V" class="btn btn-ghost" target="_blank" rel="noopener">💬 Pridruži se Discordu</a>
+            </div>
+        </section>
+
+        <!-- Obavijesti -->
+        <div class="section-title">Obavijesti i vijesti</div>
+        <div class="category">
+            <div class="forum-row">
+                <div class="forum-icon">📢</div>
+                <div class="forum-info">
+                    <a href="#" class="forum-title">Novosti sa servera</a>
+                    <div class="forum-desc">Sve važne obavijesti i nadogradnje vezane za server.</div>
+                </div>
+                <div class="forum-stats"><b>142 Teme</b>1,250 Postova</div>
+            </div>
+
+            <div class="forum-row">
+                <div class="forum-icon">📜</div>
+                <div class="forum-info">
+                    <a href="#" class="forum-title">Pravila Servera</a>
+                    <div class="forum-desc">Pročitajte pravila prije početka igre na serveru.</div>
+                </div>
+                <div class="forum-stats"><b>5 Tema</b>12 Postova</div>
+            </div>
+        </div>
+
+        <div class="section-title">Balkan Flex Community</div>
+        <div class="category">
+            <div class="forum-row">
+                <div class="forum-icon">🎮</div>
+                <div class="forum-info">
+                    <a href="#" class="forum-title">GTA 5 - FiveM Roleplay</a>
+                    <div class="forum-desc">Sve o našem roleplay serveru: igra, događaji i iskustva igrača.</div>
+                </div>
+                <div class="forum-stats"><b>0 Tema</b>0 Postova</div>
+            </div>
+
+            <div class="forum-row">
+                <div class="forum-icon">📣</div>
+                <div class="forum-info">
+                    <a href="#" class="forum-title">Promocije</a>
+                    <div class="forum-desc">Promoviraj svoju frakciju, posao ili projekat na serveru.</div>
+                </div>
+                <div class="forum-stats"><b>0 Tema</b>0 Postova</div>
+            </div>
+
+            <div class="forum-row">
+                <div class="forum-icon">🎉</div>
+                <div class="forum-info">
+                    <a href="#" class="forum-title">Forum eventi</a>
+                    <div class="forum-desc">Događaji, nagradne igre i natjecanja na forumu i serveru.</div>
+                </div>
+                <div class="forum-stats"><b>0 Tema</b>0 Postova</div>
+            </div>
+
+            <div class="forum-row">
+                <div class="forum-icon">👋</div>
+                <div class="forum-info">
+                    <a href="#" class="forum-title">Predstavite se</a>
+                    <div class="forum-desc">Novi si? Predstavi se zajednici i upoznaj ostale igrače.</div>
+                </div>
+                <div class="forum-stats"><b>0 Tema</b>0 Postova</div>
+            </div>
+        </div>
+
+        <div class="section-title">Cafe</div>
+        <div class="category">
+            <div class="forum-row">
+                <div class="forum-icon">🛠️</div>
+                <div class="forum-info">
+                    <a href="#" class="forum-title">Tehnička podrška</a>
+                    <div class="forum-desc">Problemi s pokretanjem, FiveM-om ili konekcijom? Pitaj ovdje.</div>
+                </div>
+                <div class="forum-stats"><b>0 Tema</b>0 Postova</div>
+            </div>
+
+            <div class="forum-row">
+                <div class="forum-icon">🎨</div>
+                <div class="forum-info">
+                    <a href="#" class="forum-title">Dizajn</a>
+                    <div class="forum-desc">Grafika, logotipi, skinovi i sve vezano za dizajn.</div>
+                </div>
+                <div class="forum-stats"><b>0 Tema</b>0 Postova</div>
+            </div>
+
+            <div class="forum-row">
+                <div class="forum-icon">💻</div>
+                <div class="forum-info">
+                    <a href="#" class="forum-title">Kompjuteri i internet</a>
+                    <div class="forum-desc">Razgovor o hardveru, softveru i internetu.</div>
+                </div>
+                <div class="forum-stats"><b>0 Tema</b>0 Postova</div>
+            </div>
+
+            <div class="forum-row">
+                <div class="forum-icon">😄</div>
+                <div class="forum-info">
+                    <a href="#" class="forum-title">Zabava</a>
+                    <div class="forum-desc">Opuštena tema za sve ostalo: humor, igre, glazba i filmovi.</div>
+                </div>
+                <div class="forum-stats"><b>0 Tema</b>0 Postova</div>
+            </div>
+        </div>
+
+
+        <!-- Staff -->
+        <div class="section-title" id="staff">Staff tim</div>
+        <div class="staff-grid">
+            <div class="staff-card owner">
+                <div class="avatar">LZ</div>
+                <div class="staff-name">Liam Zum</div>
+                <span class="staff-role">Vlasnik</span>
+                <p class="staff-desc">Osnivač i vlasnik servera.</p>
+            </div>
+
+            <div class="staff-card dev">
+                <div class="avatar">SB</div>
+                <div class="staff-name">Sebo Badnjar</div>
+                <span class="staff-role">Developer</span>
+                <p class="staff-desc">Razvoj i održavanje servera i skripti.</p>
+            </div>
+
+            <div class="staff-card leader">
+                <div class="avatar">KR</div>
+                <div class="staff-name">KRBA</div>
+                <span class="staff-role">Vođa staffa</span>
+                <p class="staff-desc">Vodi staff tim i brine o redu na serveru.</p>
+            </div>
+        </div>
+
+    </div>
+
+    <footer>
+        <b>Balkan Flex <span>Roleplay</span></b> &middot; <a href="https://discord.gg/mtyzrtEf2V" target="_blank" rel="noopener" style="color:var(--text);text-decoration:underline">Discord</a> &middot; Sva prava pridržana
+    </footer>
+
+</body>
+</html>
